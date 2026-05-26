@@ -5,7 +5,7 @@ namespace _Project.Scripts.Entities.Player.AnimationService
 {
     public class PlayerAnimationService : BaseAnimationService
     {
-        public PlayerAnimationService(Animator animator) : base(animator)
+        public PlayerAnimationService(Animator animator, Animator animatorEffects) : base(animator, animatorEffects)
         {
         }
     }

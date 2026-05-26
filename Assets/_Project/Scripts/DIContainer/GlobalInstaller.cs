@@ -6,12 +6,12 @@ namespace _Project.Scripts.DIContainer
 {
     public class GlobalInstaller : MonoInstaller
     {
-        [SerializeField] private Player.Player _playerPrefab;
+        [SerializeField] private Entities.Player.Player _playerPrefab;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle().NonLazy();
-            Container.Bind<Player.Player>().FromComponentInNewPrefab(_playerPrefab).AsSingle().NonLazy();
+            Container.Bind<Entities.Player.Player>().FromComponentInNewPrefab(_playerPrefab).AsSingle().NonLazy();
         }
     }
 }

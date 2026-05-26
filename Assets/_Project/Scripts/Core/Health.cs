@@ -2,17 +2,17 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.Core
 {
     public class Health
     {
+        private readonly CancellationToken _cancellationToken;
+        
         private int _health;
         private int _maxHealth;
         private float _timeDelayDamage;
         private bool _canTakeDamage = true;
         
-        private readonly CancellationToken _cancellationToken;
-
         public Health(int maxHealth, float timeDelayDamage, CancellationToken token)
         {
             _maxHealth = maxHealth;

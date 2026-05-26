@@ -19,8 +19,6 @@ namespace _Project.Scripts.GameState
 
         private async UniTask ExecuteStartGame()
         {
-            FadeImage.FadeOut().Forget();
-
             Player.enabled = true;
             Player.Resurrection();
             Player.transform.position = _spawnPointPlayer.position;
@@ -31,6 +29,8 @@ namespace _Project.Scripts.GameState
             _camera.enabled = true;
             _camera.Follow = Player.transform;
             _camera.LookAt = Player.transform;
+
+            await FadeImage.FadeOut();
         }
     }
 }

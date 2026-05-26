@@ -10,7 +10,7 @@ namespace _Project.Scripts.Enemy.FSM
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out Player.Player player))
+            if (other.TryGetComponent(out Entities.Player.Player player))
             {
                 OnFoundPlayer?.Invoke(player.transform);
             }
@@ -18,7 +18,7 @@ namespace _Project.Scripts.Enemy.FSM
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.TryGetComponent(out Player.Player player))
+            if (other.TryGetComponent(out Entities.Player.Player player))
             {
                 OnMissPlayer?.Invoke();
             }

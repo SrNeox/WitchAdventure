@@ -1,23 +1,29 @@
 using System;
 using System.Threading;
+using _Project.Scripts.Core;
 using _Project.Scripts.Entities.Player.AnimationService;
 using _Project.Scripts.Input;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Entities.Player
 {
     [SelectionBase]
     public class Player : MonoBehaviour, IDamageable
     {
+        private static readonly int Velocity = Animator.StringToHash("Velocity");
+        
         [SerializeField] private int _maxHealth;
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _forceDash = 20;
         [SerializeField] private float _delayForce = 0.1f;
 
-        private Rigidbody2D _rigidbody;
+        [Header("AnimatorEffects")] [SerializeField]
+        private Animator _animatorEffects;
+
         private Animator _animator;
+        private Rigidbody2D _rigidbody;
 
         private Health _health;
         private InputService _inputService;
@@ -72,7 +78,7 @@ namespace _Project.Scripts.Player
             _rigidbody = GetComponent<Rigidbody2D>();
 
             _health = new Health(_maxHealth, _knockTimer, this.destroyCancellationToken);
-            _playerAnimationService = new PlayerAnimationService(_animator);
+            _playerAnimationService = new PlayerAnimationService(_animator , _animatorEffects);
         }
 
         public void TakeDamage(int damage, Transform enemyPosition)
@@ -100,7 +106,7 @@ namespace _Project.Scripts.Player
             _rigidbody.velocity = Vector2.zero;
             _isKnocked = false;
         }
-        
+
         public void Resurrection()
         {
             foreach (var child in GetComponentsInChildren<Transform>(true))
@@ -112,7 +118,6 @@ namespace _Project.Scripts.Player
             }
 
             _isDead = false;
-            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _playerAnimationService.TriggerResurrection();
         }
 
@@ -153,7 +158,5 @@ namespace _Project.Scripts.Player
             _playerAnimationService.TriggerDeath();
             IsDeath?.Invoke();
         }
-
-        
     }
 }

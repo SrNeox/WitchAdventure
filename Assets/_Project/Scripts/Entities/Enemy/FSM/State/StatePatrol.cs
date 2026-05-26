@@ -1,5 +1,5 @@
-using _Project.Scripts.Enemy.FSM.Core;
 using _Project.Scripts.Enemy.FSM.State.Component;
+using _Project.Scripts.Entities.Enemy.FSM.Core;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;

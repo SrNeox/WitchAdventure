@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts.Combat
 {
     public class Sword : MonoBehaviour
     {

@@ -10,11 +10,11 @@ namespace _Project.Scripts.GameState
         [SerializeField] private FadeImage _fadeImage;
 
         public FadeImage FadeImage => _fadeImage;
-        public Player.Player Player { get; private set; }
+        public Entities.Player.Player Player { get; private set; }
         public EnemySpawner EnemySpawner { get; private set; }
 
         [Inject]
-        private void Construct(Player.Player player, EnemySpawner spawner)
+        private void Construct(Entities.Player.Player player, EnemySpawner spawner)
         {
             Player = player;
             EnemySpawner = spawner;

@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Combat;
 using _Project.Scripts.Input;
 using UnityEngine;
 using Zenject;

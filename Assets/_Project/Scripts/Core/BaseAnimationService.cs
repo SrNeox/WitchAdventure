@@ -4,26 +4,38 @@ namespace _Project.Scripts.Core
 {
     public abstract class BaseAnimationService
     {
-        protected readonly Animator Animator; 
+        protected readonly Animator Animator;
+        protected readonly Animator AnimatorEffects;
         
+        private readonly int _maxVariantHit = 2;
+
         private static readonly int DieHash = Animator.StringToHash("Die");
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
         private static readonly int Resurrection = Animator.StringToHash("Resurrection");
         private static readonly int TakeDamageHash = Animator.StringToHash("TakeDamage");
-
-        protected BaseAnimationService(Animator animator)
+        
+        private static readonly int VariantHit = Animator.StringToHash("VariantHit");
+        
+        protected BaseAnimationService(Animator animator, Animator animatorEffects)
         {
             Animator = animator;
+            AnimatorEffects = animatorEffects;
         }
 
         public void SetSpeed(float speed)
         {
             Animator.SetFloat(SpeedHash, speed);
+
+            if (AnimatorEffects == null)
+                return;
+            AnimatorEffects.SetFloat(SpeedHash, speed);
         }
 
         public void TriggerTakeDamage()
         {
             Animator.SetTrigger(TakeDamageHash);
+            AnimatorEffects.SetInteger(VariantHit, Random.Range(0, _maxVariantHit));
+            AnimatorEffects.SetTrigger(TakeDamageHash);
         }
 
         public void TriggerDeath()

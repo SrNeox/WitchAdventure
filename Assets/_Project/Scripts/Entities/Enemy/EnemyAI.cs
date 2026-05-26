@@ -1,9 +1,10 @@
 using System;
 using System.Threading;
+using _Project.Scripts.Core;
 using _Project.Scripts.Enemy.FSM;
-using _Project.Scripts.Enemy.FSM.Core;
 using _Project.Scripts.Enemy.FSM.State;
 using _Project.Scripts.Enemy.FSM.State.Component;
+using _Project.Scripts.Entities.Enemy.FSM.Core;
 using _Project.Scripts.ScriptableObject;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -14,9 +15,10 @@ namespace _Project.Scripts.Entities.Enemy
 {
     public class EnemyAI : MonoBehaviour, IDamageable
     {
-        [SerializeField] private EnemySO _config; 
-        
-        [SerializeField] private Transform _attackPoint; 
+        [SerializeField] private EnemySO _config;
+
+        [SerializeField] private Transform _attackPoint;
+        [SerializeField] private Animator _animatorEffects;
 
         private Health _health;
         private Animator _animator;
@@ -78,9 +80,9 @@ namespace _Project.Scripts.Entities.Enemy
 
             _agent.updateUpAxis = false;
             _agent.updateRotation = false;
-            
+
             _health = new Health(_config.MaxHealth, _config.TimeDelayTakingDamage, this.destroyCancellationToken);
-            _enemyAnimationService = new EnemyAnimationService(_animator);
+            _enemyAnimationService = new EnemyAnimationService(_animator, _animatorEffects);
             _stateMachineEnemy = new StateMachineEnemy(_enemyAnimationService);
 
             RegisterStates();
@@ -89,7 +91,7 @@ namespace _Project.Scripts.Entities.Enemy
         private void RegisterStates()
         {
             _stateIdle = new StateIdle();
-            
+
             _statePatrol = new StatePatrol(
                 _agent, transform, _enemyAnimationService,
                 _config.MaxDistancePatrol, _config.MinDistancePatrol, _config.PatrolTime);
@@ -98,11 +100,11 @@ namespace _Project.Scripts.Entities.Enemy
                 _agent, transform, _enemyAnimationService, _stateMachineEnemy);
 
             _stateDie = new StateDie(_enemyAnimationService, _colliderBody);
-            
+
             _stateAttacking = new StateAttacking(
                 _enemyAnimationService, _stateMachineEnemy,
                 _config.AttackBoxSize, _attackPoint, _config.Damage, _config.AttackCooldown);
-            
+
             _stateTakeDamage = new StateTakeDamage(
                 _enemyAnimationService, _stateMachineEnemy,
                 _agent, this.destroyCancellationToken, _config.Contusion);

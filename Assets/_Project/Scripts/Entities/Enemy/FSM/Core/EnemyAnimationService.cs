@@ -2,14 +2,14 @@ using _Project.Scripts.Core;
 using _Project.Scripts.Enemy.FSM.State.Component;
 using UnityEngine;
 
-namespace _Project.Scripts.Enemy.FSM.Core
+namespace _Project.Scripts.Entities.Enemy.FSM.Core
 {
     public class EnemyAnimationService : BaseAnimationService
     {
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Attacking = Animator.StringToHash("Attacking");
 
-        public EnemyAnimationService(Animator animator) : base(animator)
+        public EnemyAnimationService(Animator animator, Animator animatorEffects) : base(animator , animatorEffects)
         {
         }
 

@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
-using _Project.Scripts.Enemy.FSM.Core;
 using _Project.Scripts.Enemy.FSM.State.Component;
+using _Project.Scripts.Entities.Enemy.FSM.Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
